@@ -3,8 +3,8 @@
 **Bringing the AVerMedia Live Gamer 4K GC573 to Linux.**
 
 A community-built, source-only V4L2 driver for capturing HDMI video with your
-GC573 (`1461:0054`), including stereo HDMI audio. Built for the community, with no vendor binary objects
-needed to build or load the driver.
+GC573 (`1461:0054`), including stereo HDMI audio. A fully open source driver, with no vendor binary
+objects needed to build or load it.
 
 **4K capture · Stereo HDMI audio · Hardware scaling · OBS integration**
 
