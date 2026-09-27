@@ -1,9 +1,5 @@
 # OpenLiveGamer4K
 
-**Hardware target: the original AVerMedia Live Gamer 4K GC573, PCI ID
-`1461:0054`. This release does not support the Live Gamer 4K 2.1 or other
-AVerMedia models.**
-
 **Bringing the AVerMedia Live Gamer 4K GC573 to Linux.**
 
 A community-built, source-only V4L2 driver for capturing HDMI video with your
@@ -22,12 +18,11 @@ needed to build or load the driver.
 using our original test pattern. This image shows an earlier working preview;
 see the [validation record](docs/VALIDATION.md) for current test coverage.*
 
-**0.1.0-beta2 — for community testing, not a stable release.** Hardware coverage currently
-consists of one GC573 on Linux Mint 22.3, kernel 6.17.0-22-generic. Selected
-SDR capture paths have passed testing; broader compatibility and long-duration
-qualification remain in progress.
-
 ## Features
+
+Designed for the **original AVerMedia Live Gamer 4K GC573** (PCI ID
+`1461:0054`). Other AVerMedia models, including the Live Gamer 4K 2.1, are
+not currently supported.
 
 | Feature | Implementation and test status |
 | --- | --- |
@@ -40,6 +35,13 @@ qualification remain in progress.
 | DKMS | Build/install checked on Mint 22.3; clean lifecycle, kernel-update and Secure Boot tests pending |
 | HDMI audio | Stereo 48 kHz S16_LE LPCM capture through ALSA enabled by default, with an off switch in the control app. Stereo test tones and simultaneous OBS audio/video passed short tests on one card; long-term sync remains unqualified. [Details](docs/VALIDATION.md) |
 | P010 and HDR | Planned; not implemented |
+
+### Compatibility and release status
+
+**0.1.0-beta2** is available for community testing. Video and stereo HDMI
+audio have been verified on one GC573 running Linux Mint 22.3 with kernel
+6.17.0-22-generic. Broader platform coverage and long-duration testing are
+in progress; see the [validation record](docs/VALIDATION.md).
 
 HDMI input currently requires RGB8. RGB24 uses a CPU channel swap; BGR24 is
 native. Advertising a mode does not mean every input/output combination works.
