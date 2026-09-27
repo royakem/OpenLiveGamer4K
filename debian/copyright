@@ -1,0 +1,30 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: OpenLiveGamer4K
+Upstream-Contact: Roy-Åke Martinsson <royakemartinsson@gmail.com>
+Source: https://github.com/royakem/OpenLiveGamer4K
+
+Files: *
+Copyright: 2026 Roy-Åke Martinsson <royakemartinsson@gmail.com>
+ GC555 project contributors (adapted portions; see THIRD_PARTY_NOTICES.md)
+License: GPL-2.0-only
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; version 2 of the License.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ MA 02110-1301 USA.
+ .
+ On Debian systems, the complete text of the GNU General Public
+ License version 2 can be found in the file
+ /usr/share/common-licenses/GPL-2.
+Comment: Includes adaptations from the GPL-2.0-only ostrich/gc555 project,
+ revision 7bb51508742adf750b17756b2211ca2bb6eeb361.
+ Upstream contributors retain authorship of their work; see
+ THIRD_PARTY_NOTICES.md in the installed documentation.

@@ -1,0 +1,12 @@
+app/openlivegamer4k-control
+app/tests/test-backend-contract
+app/tests/test-convert
+app/tests/test-worker
+src/*.o
+src/.*.cmd
+src/*.ko
+src/*.mod
+src/*.mod.c
+src/Module.symvers
+src/modules.order
+src/.tmp_versions/

@@ -1,0 +1,3 @@
+# Expected for this private, non-Debian upload: there is no Debian bug
+# to close on initial upload.
+initial-upload-closes-no-bugs

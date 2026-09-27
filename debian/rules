@@ -1,0 +1,85 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/architecture.mk
+
+# ---- openlivegamer4k-control (Architecture: any GTK4 app) ----
+# Build the GUI binary directly into the package tree. The app has no
+# private shared library: it links system GTK4/GLib, and dh_shlibdeps
+# derives the runtime Depends from the binary (shlibs:Depends in control).
+
+CONTROL_APP = openlivegamer4k-control
+CONTROL_DIR = debian/$(CONTROL_APP)
+CC_APP = cc
+CFLAGS_APP = -O2 -Wall -Wextra -std=gnu11 -Iapp/include
+HAS_APP = $(wildcard app/src/main.c)
+
+# The control binary is the only ELF in either package and it lives in
+# usr/bin, which dh_shlibdeps does not scan. dh_gencontrol invokes
+# dpkg-gencontrol with -T debian/<package>.substvars (the PER-PACKAGE
+# substvars file), so shlibs:Depends must land in
+# debian/openlivegamer4k-control.substvars — writing it to the main
+# debian/substvars is not enough. Compute the deps in the install phase
+# and re-assert them in the shlibdeps phase (dh_makeshlibs runs between
+# install and gencontrol and manages these files), failing the build
+# loudly if the line is ever absent.
+define compute_shlibs
+	/usr/bin/dpkg-shlibdeps -Tdebian/$(CONTROL_APP).substvars \
+	    -e $(CONTROL_DIR)/usr/bin/$(CONTROL_APP)
+	grep -q '^shlibs:Depends=' debian/$(CONTROL_APP).substvars \
+	    || { echo "shlibs:Depends missing from debian/$(CONTROL_APP).substvars" >&2; exit 1; }
+endef
+
+# Belt and suspenders: dh_makeshlibs (which runs between install and
+# gencontrol) manages debian/substvars too, so recompute the shlibs deps
+# after it and fail loudly if the line is ever absent — gencontrol would
+# otherwise silently ship an empty Depends.
+override_dh_shlibdeps:
+	[ -z "$(HAS_APP)" ] || $(call compute_shlibs)
+
+# dh-dkms on Noble ships no dh-sequence-dkms activation package, so invoke
+# dh_dkms explicitly. It must run before dh_install (which installs the
+# remaining payload) and adds the generated DKMS maintainer scripts plus
+# the misc:Depends substitution.
+#
+# The app compile happens in the install phase: dh_prep (first step of
+# `dh binary`) wipes the package tree, so anything built into
+# debian/openlivegamer4k-control/ during the build phase is deleted.
+override_dh_install:
+	dh_dkms
+	dh_install
+	dh_installman -p$(CONTROL_APP) debian/$(CONTROL_APP).1
+ifneq ($(HAS_APP),)
+	$(MAKE) -f debian/rules app-binary
+endif
+
+# offline unit tests run in the source build, not in the VM autopkgtest
+ifneq ($(HAS_APP),)
+override_dh_auto_test:
+	dh_auto_test
+	$(MAKE) -C app test
+	python3 tests/test-audio-helpers.py
+	python3 tests/test_audio_clock_math.py
+	python3 tests/test_audio_clock_sequence.py
+	python3 tests/test_av_reset.py
+endif
+
+.PHONY: app-binary
+app-binary:
+	mkdir -p $(CONTROL_DIR)/usr/bin \
+	         $(CONTROL_DIR)/usr/share/applications \
+	         $(CONTROL_DIR)/usr/share/doc/$(CONTROL_APP)
+	$(MAKE) -C app
+	install -m755 app/openlivegamer4k-control $(CONTROL_DIR)/usr/bin/$(CONTROL_APP)
+	install -d $(CONTROL_DIR)/usr/libexec/openlivegamer4k $(CONTROL_DIR)/usr/share/polkit-1/actions
+	install -m755 tools/audio-helper.py $(CONTROL_DIR)/usr/libexec/openlivegamer4k/audio-helper
+	install -m755 tools/audio-test.py $(CONTROL_DIR)/usr/libexec/openlivegamer4k/audio-test
+	install -m755 tools/collect-audio-report.py $(CONTROL_DIR)/usr/libexec/openlivegamer4k/collect-audio-report
+	install -m644 app/data/io.github.royakem.OpenLiveGamer4K.audio.policy $(CONTROL_DIR)/usr/share/polkit-1/actions/
+	install -m644 app/data/io.github.royakem.OpenLiveGamer4KControl.desktop \
+	    $(CONTROL_DIR)/usr/share/applications/io.github.royakem.OpenLiveGamer4KControl.desktop
+	install -m644 app/data/README.md \
+	    $(CONTROL_DIR)/usr/share/doc/$(CONTROL_APP)/README.md
+	$(call compute_shlibs)
+
+%:
+	dh $@

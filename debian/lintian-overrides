@@ -1,0 +1,9 @@
+# Both findings are expected and justified for this private, non-Debian upload.
+#
+# initial-upload-closes-no-bugs: this is a project package, not a Debian
+#   upload, so there is no Debian bug to close.
+# package-contains-upstream-installation-documentation: INSTALL.md is a
+#   deliberately package-specific install guide (not a verbatim upstream
+#   copy) and the package plan requires it to be installed.
+initial-upload-closes-no-bugs
+package-contains-upstream-installation-documentation

@@ -1,0 +1,36 @@
+*.o
+*.ko
+*.mod
+*.mod.c
+*.cmd
+Module.symvers
+modules.order
+.tmp_versions/
+__pycache__/
+*.pyc
+*.raw
+*.rgb
+*.yuv
+evidence/
+# debhelper/dpkg-buildpackage build artifacts
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/files
+debian/*.changes
+debian/*.buildinfo
+debian/dkms
+debian/openlivegamer4k-dkms.dkms.debhelper
+debian/*/
+!debian/olg4k-docs/
+!debian/source/
+!debian/tests/
+# Control-app build outputs
+/app/openlivegamer4k-control
+/app/tests/test-backend-contract
+/app/tests/test-convert
+/app/tests/test-worker
+/debian/*.substvars
+/debian/*.debhelper
+
+# Local publication mapping (private development only)
+/private/publication/last-export.json

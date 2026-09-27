@@ -1,0 +1,50 @@
+Source: openlivegamer4k
+Section: kernel
+Priority: optional
+Maintainer: Roy-Åke Martinsson <royakemartinsson@gmail.com>
+Build-Depends: debhelper-compat (= 13),
+ dh-dkms,
+ pkgconf,
+ libgtk-4-dev (>= 4.14.2),
+ libjson-glib-dev,
+ python3
+Standards-Version: 4.6.2
+Homepage: https://github.com/royakem/OpenLiveGamer4K
+
+Package: openlivegamer4k-dkms
+Architecture: all
+Depends: ${misc:Depends}
+Description: DKMS kernel driver for the AVerMedia Live Gamer 4K (GC573)
+ Source-only V4L2 capture driver for the AVerMedia Live
+ Gamer 4K (GC573, PCI 1461:0054) HDMI capture card, with concurrent
+ stereo 48 kHz LPCM capture through ALSA.
+ .
+ This package installs the driver source and registers it with DKMS,
+ which builds and installs the kernel module for each kernel with
+ matching headers. Installation is NOT capture-ready: the module
+ requires explicit first-use options (bridge_link, bridge_bootstrap,
+ reset_gpio_mask and related values) that must be supplied on the
+ first module load. See README.Debian for the activation command,
+ next-boot behavior, and rollback guidance.
+ .
+ Beta prerelease. Intended targets: Ubuntu 24.04 (Noble) and Linux Mint
+ 22.x on amd64, with kernels whose headers are installed. Tested on Linux
+ Mint 22.3, kernel 6.17.0-22-generic; Ubuntu 24.04 is intended but untested.
+
+Package: openlivegamer4k-control
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, python3, alsa-utils, psmisc, pkexec
+Recommends: openlivegamer4k-dkms (= ${source:Version})
+Description: GTK4 control app for the OpenLiveGamer4K GC573 capture driver
+ Native X11/Wayland (GTK 4) desktop app to inspect the AVerMedia Live
+ Gamer 4K (GC573) V4L2 node and preview HDMI capture.
+ .
+ Read-only device status by default, safe to run while OBS or another
+ V4L2 client owns the node. Preview is an explicit user action that
+ takes the exclusive node and releases it on stop; it never preempts
+ another client. The app runs unprivileged, has no network or telemetry,
+ and still launches when no card is present (it reports the device is
+ absent).
+ .
+ This package does not require the openlivegamer4k-dkms driver package
+ to install or start; it installs independently.

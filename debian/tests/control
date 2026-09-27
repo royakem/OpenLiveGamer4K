@@ -1,0 +1,3 @@
+Tests: package-payload
+Depends: dkms, @
+Restrictions: needs-root

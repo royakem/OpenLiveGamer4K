@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+test -x /usr/bin/openlivegamer4k-control
+test -x /usr/libexec/openlivegamer4k/audio-helper
+test -x /usr/libexec/openlivegamer4k/audio-test
+test -f /usr/share/polkit-1/actions/io.github.royakem.OpenLiveGamer4K.audio.policy
+test -f /usr/src/gc573_pure-0.1.0~beta1/src/gc573_audio.c
+test -f /usr/src/gc573_pure-0.1.0~beta1/dkms.conf
+# Payload-only: never activate the driver or touch a live capture device.

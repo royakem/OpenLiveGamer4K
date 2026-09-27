@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=OpenLiveGamer4K Control
+GenericName=Live Gamer 4K capture control
+Comment=Inspect and preview the AVerMedia Live Gamer 4K (GC573) capture card
+Exec=openlivegamer4k-control
+Terminal=false
+Categories=AudioVideo;Video;
+Keywords=hdmi;capture;v4l2;livegamer;gc573;
+StartupNotify=true

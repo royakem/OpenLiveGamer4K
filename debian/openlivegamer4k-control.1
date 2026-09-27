@@ -1,0 +1,53 @@
+.TH OPENLIVEGAMER4K-CONTROL 1 "September 2026" "openlivegamer4k 0.1.0" "User Commands"
+.SH NAME
+openlivegamer4k-control \- inspect and preview the AVerMedia Live Gamer 4K capture card
+.SH SYNOPSIS
+\fBopenlivegamer4k-control\fP [\fB\-\-backend\fP=\fIbackend\fP]
+.SH DESCRIPTION
+\fBopenlivegamer4k-control\fP is a native GTK 4 (X11/Wayland) control
+application for the OpenLiveGamer4K (GC573) V4L2 capture driver.
+.PP
+By default it runs in \fBread-only status mode\fP: it enumerates and
+queries the device (driver name, input, configured format, size and
+rate) without allocating streaming buffers or changing capture
+settings, so it is safe to run while OBS or another V4L2 client owns
+the node.
+.PP
+Selecting \fIStart preview\fP switches the application to the exclusive
+V4L2 node, negotiates the selected format, size and rate, and streams
+frames to the window. \fIStop preview\fP releases the device
+immediately. If the node is already in use, the application reports the
+failure; it never stops or preempts another client.
+.PP
+The application runs unprivileged, opens no network connections, and
+collects no telemetry. It launches even when no GC573 node is present
+and reports that the device is absent.
+.SH HDMI AUDIO
+Audio is disabled by default and requires explicit opt-in. Enabling or disabling
+uses a narrow polkit helper to reload an idle driver and reconnect HDMI.
+Other clients must close the device first. The GUI remains unprivileged.
+The five-second HDMI test supports stereo 48 kHz LPCM only and retains no
+recording. Concurrent V4L2 video and ALSA audio capture are supported.
+Video stop or HDMI recovery can interrupt audio; restart capture if needed.
+Long-duration A/V synchronization remains unqualified. No boot setting
+is changed and no report is uploaded automatically.
+.SH OPTIONS
+.TP
+\fB\-\-backend\fP=\fIbackend\fP, \fB\-b\fP \fIbackend\fP
+Device backend to use. \fIauto\fP (default) probes
+\fI/dev/video0\fP..\fI/dev/video31\fP for a card whose V4L2 name is
+"Live Gamer 4K". \fImock\fP opens a deterministic in-process device
+that reports the full GC573 capability set; useful for offline
+development and testing without hardware.
+.SH FILES
+.TP
+\fI/dev/videoN\fP
+V4L2 capture node created by the \fBgc573_pure\fP kernel module.
+.SH SEE ALSO
+\fBv4l2\-ctl\fP(1), the \fIopenlivegamer4k-dkms\fP package README
+(\fI/usr/share/doc/openlivegamer4k-dkms/README.Debian.gz\fP).
+.SH AUTHOR
+Roy-Åke Martinsson <royakemartinsson@gmail.com>
+.SH COPYRIGHT
+Copyright \(co 2026 Roy-Åke Martinsson.
+GPL-2.0-only.
