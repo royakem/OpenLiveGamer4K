@@ -13,7 +13,7 @@ needed to build or load the driver.
 **4K capture · Stereo HDMI audio · Hardware scaling · OBS integration**
 
 [Beta release notes](docs/RELEASE-NOTES.md) · [Installation](docs/INSTALL.md) · [Features](docs/FEATURES.md) ·
-[OBS setup](docs/OBS.md) · [Validation](docs/VALIDATION.md) ·
+[Report a problem](docs/REPORTING.md) · [OBS setup](docs/OBS.md) · [Validation](docs/VALIDATION.md) ·
 [Contributing](CONTRIBUTING.md)
 
 ![OBS Studio on Linux displaying the GC573 source driver's original seven-color test pattern and screen-2 timer](docs/images/obs-gc573-test-pattern.png)
@@ -22,7 +22,7 @@ needed to build or load the driver.
 using our original test pattern. This image shows an earlier working preview;
 see the [validation record](docs/VALIDATION.md) for current test coverage.*
 
-**0.1.0-beta1 candidate — for community testing, not a stable release.** Hardware coverage currently
+**0.1.0-beta2 — for community testing, not a stable release.** Hardware coverage currently
 consists of one GC573 on Linux Mint 22.3, kernel 6.17.0-22-generic. Selected
 SDR capture paths have passed testing; broader compatibility and long-duration
 qualification remain in progress.
@@ -38,7 +38,7 @@ qualification remain in progress.
 | 24/23.976, 25, 30/29.97, 50, 60/59.94 Hz inputs | Selected timing families demonstrated on earlier revisions; see the detailed matrix |
 | OBS integration | Concurrent V4L2 video and ALSA audio verified; maintainer confirmed picture and music capture |
 | DKMS | Build/install checked on Mint 22.3; clean lifecycle, kernel-update and Secure Boot tests pending |
-| HDMI audio | Stereo 48 kHz S16_LE LPCM capture through ALSA with control-app opt-in; disabled by default. Stereo test tones and simultaneous OBS audio/video passed short tests on one card; long-term sync remains unqualified. [Details](docs/VALIDATION.md) |
+| HDMI audio | Stereo 48 kHz S16_LE LPCM capture through ALSA enabled by default, with an off switch in the control app. Stereo test tones and simultaneous OBS audio/video passed short tests on one card; long-term sync remains unqualified. [Details](docs/VALIDATION.md) |
 | P010 and HDR | Planned; not implemented |
 
 HDMI input currently requires RGB8. RGB24 uses a CPU channel swap; BGR24 is
@@ -112,8 +112,8 @@ owner.
 
 ## Control app and HDMI audio
 
-The GTK4 control app provides device status, video preview, and opt-in HDMI
-audio capture. Beta1 retains the verified alpha4 implementation: stereo 48 kHz S16_LE LPCM through ALSA,
+The GTK4 control app provides device status, video preview, and HDMI
+audio capture enabled by default: stereo 48 kHz S16_LE LPCM through ALSA,
 including simultaneous video and audio in OBS. Known stereo tones passed
 capture tests, and the maintainer confirmed music capture end to end.
 
@@ -128,8 +128,8 @@ The five-second test reports silence or nonzero activity without saving audio.
 You can save a diagnostic report locally and choose whether to share it.
 
 Matching alpha4 driver and control-app packages were installed and tested on
-Mint 22.3 / kernel 6.17.0-22. Beta1 preserves that implementation and updates
-packaging and release documentation. Native X11 and nested Wayland mock tests
+Mint 22.3 / kernel 6.17.0-22. Beta2 retains the capture paths, enables audio by default and adds guided issue
+reporting with richer diagnostics. Native X11 and nested Wayland mock tests
 have passed; native Wayland hardware preview, broader distributions and the
 full package lifecycle remain unqualified.
 See the [app guide](app/data/README.md) and

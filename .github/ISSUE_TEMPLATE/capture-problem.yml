@@ -1,0 +1,61 @@
+name: Capture, audio or installation problem
+description: Report a reproducible GC573 problem with diagnostic details.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This project targets the original **GC573, PCI 1461:0054**.
+        In the control app, choose **Save diagnostic report…** while the problem is present.
+        Review the JSON before sharing; paste it below or attach it in the reproduction field.
+        Do not include credentials, personal paths, hostnames, serial numbers or private recordings.
+  - type: dropdown
+    id: category
+    attributes:
+      label: Problem area
+      options:
+        - HDMI audio
+        - Video capture or image quality
+        - Audio/video synchronization
+        - Input changes or recovery
+        - Installation or driver loading
+        - Control application
+    validations:
+      required: true
+  - type: input
+    id: hardware
+    attributes:
+      label: Capture card and HDMI source
+      description: Card model/PCI ID and source device (PC, console, etc.). No serial numbers.
+      placeholder: GC573 (1461:0054), source device/model
+    validations:
+      required: true
+  - type: textarea
+    id: mode
+    attributes:
+      label: Input and capture settings
+      description: Input resolution/refresh, RGB/YCbCr and HDR state, source audio format/rate, capture format/size/fps, OBS/app version.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps, expected result and actual result
+      description: Include frequency, whether this is a regression, and any workaround. Attach a reviewed report here if preferred.
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Reviewed diagnostic report
+      description: Paste the JSON, say where it is attached, or explain why collection failed. If unavailable, include distro, kernel and package versions manually.
+      render: json
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before submitting
+      options:
+        - label: I reviewed the report and attachments and removed private information.
+          required: true

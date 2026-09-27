@@ -1,4 +1,9 @@
-# Validation summary — beta1
+# Validation summary — beta2
+
+Beta2 enables audio by default and extends passive issue diagnostics. Existing
+capture results below describe the same video/audio engines with audio enabled;
+changing the default does not add new hardware coverage. Diagnostic/default
+regressions are included in the package build.
 
 ## Tested setup
 

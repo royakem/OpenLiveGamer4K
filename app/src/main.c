@@ -191,8 +191,7 @@ static void refresh_audio_state(struct App *a)
     gtk_button_set_label(a->audio_enable, state == AUDIO_ON ? "Disable HDMI audio" : "Enable HDMI audio");
     gtk_widget_set_sensitive(GTK_WIDGET(a->audio_enable), !a->audio_process && !a->report_process && state != AUDIO_UNSUPPORTED &&
         (state == AUDIO_ON || gtk_check_button_get_active(a->audio_consent)));
-    gtk_widget_set_sensitive(GTK_WIDGET(a->audio_test), !a->audio_process && !a->report_process && state == AUDIO_ON &&
-        gtk_check_button_get_active(a->audio_consent));
+    gtk_widget_set_sensitive(GTK_WIDGET(a->audio_test), !a->audio_process && !a->report_process && state == AUDIO_ON);
     gtk_widget_set_sensitive(GTK_WIDGET(a->report_button), !a->report_process && !a->audio_process);
 }
 
@@ -273,7 +272,7 @@ static void launch_audio_command(struct App *a, gboolean test)
     if (a->mock_backend) return;
     AudioState state = audio_kernel_state();
     gboolean consent = gtk_check_button_get_active(a->audio_consent);
-    if (a->audio_process || a->report_process || state == AUDIO_UNSUPPORTED || (test && (!consent || state != AUDIO_ON)) ||
+    if (a->audio_process || a->report_process || state == AUDIO_UNSUPPORTED || (test && state != AUDIO_ON) ||
         (!test && state == AUDIO_OFF && !consent)) return;
     GError *err = NULL; const char *argv_enable[] = { "pkexec", "/usr/libexec/openlivegamer4k/audio-helper", state == AUDIO_ON ? "disable" : "enable", NULL };
     const char *argv_test[] = { "/usr/libexec/openlivegamer4k/audio-test", NULL };
@@ -361,7 +360,7 @@ static void on_save_report(GtkButton *button, gpointer data)
     if (a->mock_backend || a->report_process || a->audio_process) return;
     GtkFileChooserNative *chooser = gtk_file_chooser_native_new("Save diagnostic report",
         a->window, GTK_FILE_CHOOSER_ACTION_SAVE, "Save", "Cancel");
-    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(chooser), "openlivegamer4k-audio-report.json");
+    gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(chooser), "openlivegamer4k-diagnostics.json");
     g_signal_connect(chooser, "response", G_CALLBACK(report_chooser_response), a);
     gtk_native_dialog_show(GTK_NATIVE_DIALOG(chooser));
 }
@@ -734,7 +733,7 @@ static void on_activate(GtkApplication *app, gpointer data)
         a->audio_state = GTK_LABEL(gtk_label_new("Kernel audio: checking…"));
         gtk_label_set_xalign(a->audio_state, 0.0);
         gtk_box_append(GTK_BOX(audio), GTK_WIDGET(a->audio_state));
-        GtkWidget *warning = gtk_label_new("48 kHz stereo LPCM HDMI audio with concurrent video capture. Video stop or HDMI recovery can interrupt audio; restart audio capture if needed. Enabling or disabling reloads HDMI and requires capture apps to be idle.");
+        GtkWidget *warning = gtk_label_new("HDMI audio is enabled by default: 48 kHz stereo LPCM with concurrent video capture. Video stop or HDMI recovery can interrupt audio; restart audio capture if needed. Enabling or disabling reloads HDMI and requires capture apps to be idle.");
         gtk_label_set_xalign(GTK_LABEL(warning), 0.0); gtk_label_set_wrap(GTK_LABEL(warning), TRUE);
         gtk_box_append(GTK_BOX(audio), warning);
         a->audio_consent = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(
@@ -753,6 +752,15 @@ static void on_activate(GtkApplication *app, gpointer data)
         gtk_box_append(GTK_BOX(audio), GTK_WIDGET(a->audio_result));
         a->report_button = GTK_BUTTON(gtk_button_new_with_label("Save diagnostic report…"));
         gtk_box_append(GTK_BOX(audio), GTK_WIDGET(a->report_button));
+        GtkWidget *issue = gtk_link_button_new_with_label(
+            "https://github.com/royakem/OpenLiveGamer4K/issues/new?template=capture-problem.yml",
+            "Report a problem on GitHub…");
+        gtk_box_append(GTK_BOX(audio), issue);
+        GtkWidget *report_help = gtk_label_new(
+            "Save a diagnostic report while the problem is present, review it, then attach or paste it into your issue. No report is uploaded automatically. Include the input resolution/refresh rate and steps to reproduce.");
+        gtk_label_set_wrap(GTK_LABEL(report_help), TRUE);
+        gtk_label_set_xalign(GTK_LABEL(report_help), 0.0);
+        gtk_box_append(GTK_BOX(audio), report_help);
         gtk_box_append(root, audio);
         }
 

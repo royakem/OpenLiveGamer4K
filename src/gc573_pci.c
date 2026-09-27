@@ -18,10 +18,10 @@
 
 #define GC573_DRIVER_NAME "gc573_pure"
 
-static bool audio_experimental;
+static bool audio_experimental = true;
 module_param(audio_experimental, bool, 0444);
 MODULE_PARM_DESC(audio_experimental,
-	"Enable stereo 48 kHz HDMI PCM capture (legacy parameter name)");
+	"Enable stereo 48 kHz HDMI PCM capture (default on; legacy parameter name)");
 
 static int gc573_pcm_start(void *context)
 {

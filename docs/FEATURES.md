@@ -1,7 +1,7 @@
 # Features and validation status
 
-**0.1.0-beta1** combines the source-only video driver, working stereo HDMI audio,
-and GTK4 control app. It preserves the installed alpha4 capture implementation.
+**0.1.0-beta2** combines the source-only video driver, working stereo HDMI audio,
+and GTK4 control app. It retains the tested capture paths, enables audio by default and adds guided diagnostics.
 The maintainer confirmed both picture and music end to end in OBS on Mint 22.3
 with kernel 6.17.0-22. Short automated stereo-tone and moving-video tests also
 passed. Earlier format/timing measurements below retain their original scope;
@@ -38,7 +38,7 @@ color qualification. Longer operation remains to be qualified.
 
 | Feature | Implemented behavior | Evidence / limit |
 | --- | --- | --- |
-| HDMI audio | Stereo 48 kHz S16_LE LPCM through ALSA | Known left/right tones and maintainer music confirmation |
+| HDMI audio | Stereo 48 kHz S16_LE LPCM through ALSA, on by default | Known left/right tones and maintainer music confirmation |
 | Concurrent A/V | V4L2 video and ALSA audio can run together | Both startup orders and short OBS recordings passed; long-term drift unqualified |
 | Audio recovery | Shared video reset reports an audio XRUN | Client may need audio capture restarted |
 | GTK4 control | Status, exclusive preview, audio mode, activity test, report export | X11 hardware tested; native Wayland hardware preview pending |

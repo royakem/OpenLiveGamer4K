@@ -23,7 +23,7 @@ The application runs unprivileged, opens no network connections, and
 collects no telemetry. It launches even when no GC573 node is present
 and reports that the device is absent.
 .SH HDMI AUDIO
-Audio is disabled by default and requires explicit opt-in. Enabling or disabling
+Audio is enabled by default on driver load; an explicit disable option is respected. Enabling or disabling
 uses a narrow polkit helper to reload an idle driver and reconnect HDMI.
 Other clients must close the device first. The GUI remains unprivileged.
 The five-second HDMI test supports stereo 48 kHz LPCM only and retains no
@@ -31,6 +31,11 @@ recording. Concurrent V4L2 video and ALSA audio capture are supported.
 Video stop or HDMI recovery can interrupt audio; restart capture if needed.
 Long-duration A/V synchronization remains unqualified. No boot setting
 is changed and no report is uploaded automatically.
+.SH REPORTING PROBLEMS
+Save a diagnostic report while the problem is present, review the JSON, then
+use the Report a problem on GitHub link to open the guided issue form.
+Include the input mode, capture settings and reproduction steps. No report is
+uploaded automatically; the collector does not record media or stop capture.
 .SH OPTIONS
 .TP
 \fB\-\-backend\fP=\fIbackend\fP, \fB\-b\fP \fIbackend\fP

@@ -1,4 +1,6 @@
 .github/FUNDING.yml
+.github/ISSUE_TEMPLATE/capture-problem.yml
+.github/ISSUE_TEMPLATE/config.yml
 .github/workflows/publication.yml
 .gitignore
 .publication-files
@@ -53,6 +55,7 @@ docs/INSTALL.md
 docs/OBS.md
 docs/PROVENANCE.md
 docs/RELEASE-NOTES.md
+docs/REPORTING.md
 docs/TROUBLESHOOTING.md
 docs/VALIDATION.md
 docs/images/README.md
@@ -112,6 +115,7 @@ tests/test_audio_clock_math.c
 tests/test_audio_clock_math.py
 tests/test_audio_clock_sequence.py
 tests/test_av_reset.py
+tests/test_diagnostics.py
 tests/test_sdr_formats.py
 tools/analyze-sdr-formats.py
 tools/audio-helper.py

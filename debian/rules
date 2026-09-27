@@ -58,6 +58,7 @@ override_dh_auto_test:
 	dh_auto_test
 	$(MAKE) -C app test
 	python3 tests/test-audio-helpers.py
+	python3 tests/test_diagnostics.py
 	python3 tests/test_audio_clock_math.py
 	python3 tests/test_audio_clock_sequence.py
 	python3 tests/test_av_reset.py

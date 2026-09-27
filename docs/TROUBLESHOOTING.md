@@ -7,7 +7,7 @@ Start with the read-only inventory:
 
 ```sh
 ./tools/device-info.sh
-dkms status gc573_pure/0.1.0~beta1
+dkms status gc573_pure/0.1.0~beta2
 sudo dmesg -T | tail -n 120
 ```
 
@@ -29,10 +29,10 @@ Install matching Ubuntu headers if missing, then retry the explicit build:
 
 ```sh
 sudo apt install "linux-headers-$(uname -r)" dkms build-essential
-sudo dkms build -m gc573_pure -v '0.1.0~beta1' -k "$(uname -r)"
+sudo dkms build -m gc573_pure -v '0.1.0~beta2' -k "$(uname -r)"
 ```
 
-Inspect `/var/lib/dkms/gc573_pure/0.1.0~beta1/build/make.log` for the first
+Inspect `/var/lib/dkms/gc573_pure/0.1.0~beta2/build/make.log` for the first
 compiler or kernel API error. `AUTOINSTALL="yes"` asks DKMS to rebuild/install
 for kernels processed by its autoinstaller; it does not by itself load the
 module. If a kernel update has no matching headers or build fails, that
@@ -99,9 +99,9 @@ restore it. DKMS removal does not restore PCI binding automatically.
 Check the module's DKMS status and the new kernel's build log:
 
 ```sh
-dkms status gc573_pure/0.1.0~beta1
-sudo dkms build -m gc573_pure -v '0.1.0~beta1' -k KERNEL_VERSION
-sudo dkms install -m gc573_pure -v '0.1.0~beta1' -k KERNEL_VERSION
+dkms status gc573_pure/0.1.0~beta2
+sudo dkms build -m gc573_pure -v '0.1.0~beta2' -k KERNEL_VERSION
+sudo dkms install -m gc573_pure -v '0.1.0~beta2' -k KERNEL_VERSION
 ```
 
 Replace `KERNEL_VERSION` with the exact version from `uname -r` after booting
@@ -116,3 +116,9 @@ color filters. A sender-side Night light setting produced a warm cast in all
 four capture formats during testing; neutral-source checks passed after it
 was disabled. Check the sender before attributing a color shift to the driver.
 Use RGB8 SDR input; P010/HDR input/output support is not implemented.
+
+## Report a problem
+
+Use the control app to save diagnostics before changing the failing state, then
+open its GitHub issue link. See [reporting instructions](REPORTING.md) for required
+details, privacy review, and the audio-disable workaround.

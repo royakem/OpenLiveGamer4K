@@ -40,13 +40,13 @@ Check that `/lib/modules/$(uname -r)/build` exists before continuing.
 ## Install the beta packages (recommended)
 
 Download the matching driver and amd64 control-app packages, plus `SHA256SUMS`,
-from the beta prerelease assets when published. Beta1 is tested on Mint 22.3
+from the [beta2 release](https://github.com/royakem/OpenLiveGamer4K/releases/tag/v0.1.0-beta2). The capture path is tested on Mint 22.3
 amd64; Ubuntu 24.04 is an intended, untested target. Do not mix package versions.
 In the directory containing the two packages:
 
 ```sh
 sha256sum --ignore-missing -c SHA256SUMS
-sudo apt install ./openlivegamer4k-dkms_0.1.0~beta1_all.deb ./openlivegamer4k-control_0.1.0~beta1_amd64.deb
+sudo apt install ./openlivegamer4k-dkms_0.1.0~beta2_all.deb ./openlivegamer4k-control_0.1.0~beta2_amd64.deb
 ```
 
 Install matching kernel headers first as above. Inspect the checksum results:
@@ -57,8 +57,9 @@ not a precompiled kernel module. The control app is a compiled amd64 binary.
 **First activation is required.** Continue at **Load the module explicitly**
 below after installation; installation alone does not enable capture. Do not
 also run the source registration steps below if you installed the package.
-Launch `openlivegamer4k-control` for status; enabling HDMI audio reloads the idle
-driver. Close capture clients first, then follow [OBS setup](OBS.md).
+Launch `openlivegamer4k-control` for status. Audio is enabled by default once
+the new driver is loaded. Changing audio mode reloads the idle driver; close
+capture clients first. Then follow [OBS setup](OBS.md).
 
 To remove the packaged installation, stop capture clients, unload
 `gc573_pure`, then use `sudo apt remove openlivegamer4k-control openlivegamer4k-dkms`.
@@ -67,13 +68,13 @@ The manual `dkms remove` instructions at the end are for a source installation.
 ## Register and build the source with DKMS
 
 The repository includes `dkms.conf` for module `gc573_pure`, version
-`0.1.0~beta1`. From the repository root, copy only the source build inputs
+`0.1.0~beta2`. From the repository root, copy only the source build inputs
 into DKMS's source directory. This excludes generated `.mod.c`, `.o`, and
 `.ko` files:
 
 ```sh
 MODULE=gc573_pure
-VERSION='0.1.0~beta1'
+VERSION='0.1.0~beta2'
 SOURCE_DIR="/usr/src/${MODULE}-${VERSION}"
 
 sudo install -d "$SOURCE_DIR"
@@ -168,8 +169,8 @@ entry:
 
 ```sh
 sudo modprobe -r gc573_pure
-sudo dkms remove -m gc573_pure -v '0.1.0~beta1' --all
-sudo rm -rf /usr/src/gc573_pure-0.1.0~beta1
+sudo dkms remove -m gc573_pure -v '0.1.0~beta2' --all
+sudo rm -rf /usr/src/gc573_pure-0.1.0~beta2
 ```
 
 If the card previously used another driver, use the recorded PCI BDF and

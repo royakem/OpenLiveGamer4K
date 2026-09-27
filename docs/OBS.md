@@ -77,9 +77,9 @@ not been validated across their versions or packages. Consult the
 
 ## HDMI audio with concurrent video
 
-Use alpha4 or later for concurrent audio/video; earlier packages lack these
-changes. Enable HDMI audio while capture applications are idle,
-then use the normal V4L2 video source and a separate **Audio Capture Device
+Beta2 enables HDMI audio by default on driver load. If an earlier configuration
+explicitly disables it, enable audio while capture applications are idle.
+Use the normal V4L2 video source and a separate **Audio Capture Device
 (ALSA)** source. Select the GC573 endpoint identified by its PCI ancestry; do
 not assume a fixed ALSA card number or select a default microphone. This board
 currently exposes `hw:CARD=Audio,DEV=0`; verify identity before reusing that name.

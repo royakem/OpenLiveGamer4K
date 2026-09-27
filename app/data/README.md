@@ -27,23 +27,35 @@ requests administrator authentication through polkit; the GUI stays unprivileged
 
 ## HDMI audio
 
-Audio is off by default. Read the warning and explicitly opt in, then choose
-**Enable HDMI audio**. Administrator authentication may be requested.
+Audio is enabled by default when the beta2 driver loads. Existing explicit
+disable options remain respected. Use **Disable HDMI audio** or **Enable HDMI
+audio** to change it; administrator authentication may be requested.
 The app stops its own preview and reloads an idle driver, briefly reconnecting
 HDMI. Other capture clients must be closed; they are never stopped for you.
 The installed DKMS module must support `audio_experimental`.
 
 **Run 5-second HDMI test** captures only the card's stereo 48 kHz S16_LE PCM,
 reports silence or nonzero activity, and keeps no recording. A nonzero result
-is not a fidelity or A/V-sync test. Beta1 includes verified stereo-tone capture,
+is not a fidelity or A/V-sync test. Beta2 includes verified stereo-tone capture,
 short simultaneous OBS audio/video tests, and user-confirmed music capture.
 Video stop or HDMI recovery can cause an audio XRUN; restart capture if needed.
 Long-term synchronization remains unqualified.
 
 **Disable HDMI audio** removes the ALSA endpoint by
 reloading the idle driver. No persistent boot setting is changed. Installing
-or opening the app never enables audio automatically. Diagnostic sharing is
-manual; there is no automatic upload.
+or opening the app does not reload the driver. The driver default applies on
+its next load; a saved `audio_experimental=0` setting overrides it. Diagnostic
+sharing is manual; there is no automatic upload.
+
+## Report a problem
+
+Choose **Save diagnostic report…** while the problem is visible, review the JSON,
+then **Report a problem on GitHub…** and paste or attach it to the issue form.
+Include the source device, input resolution/refresh/audio format, capture settings,
+application version, and reproduction steps. The report adds kernel, distro,
+package versions, module settings and receiver/DMA state; it records no media
+and does not stop capture. Custom system strings still need your review.
+The five-second audio test needs the ALSA endpoint free; close OBS first if busy.
 
 ## Driver
 

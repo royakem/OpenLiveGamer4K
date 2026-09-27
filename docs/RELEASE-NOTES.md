@@ -1,4 +1,4 @@
-# OpenLiveGamer4K 0.1.0-beta1
+# OpenLiveGamer4K 0.1.0-beta2
 
 **Hardware target: the original AVerMedia Live Gamer 4K GC573, PCI ID
 `1461:0054`. This release does not support the Live Gamer 4K 2.1 or other
@@ -20,17 +20,18 @@ No vendor driver binary or firmware payload is required by this distribution.
   a five-second audio activity test, and locally saved diagnostic reports.
 - DKMS source package and separate amd64 control-app package.
 
-Beta1 preserves the driver/app implementation installed and tested as alpha4.
-This preparation changes release metadata and documentation, not capture code.
+Beta2 enables HDMI audio by default and adds a GitHub issue link, guided bug
+form and diagnostic schema v2 with distribution, package and source revisions.
+The video/audio capture engines are unchanged from the tested alpha4 path.
 
 ## Downloads
 
 | Asset | Purpose |
 | --- | --- |
-| `openlivegamer4k-dkms_0.1.0~beta1_all.deb` | Driver source; DKMS compiles for the installed kernel |
-| `openlivegamer4k-control_0.1.0~beta1_amd64.deb` | Compiled GTK4 control app and audio helpers |
-| `openlivegamer4k_0.1.0~beta1.tar.xz` | Corresponding complete source, including Debian packaging |
-| `openlivegamer4k_0.1.0~beta1.dsc` | Debian source description |
+| `openlivegamer4k-dkms_0.1.0~beta2_all.deb` | Driver source; DKMS compiles for the installed kernel |
+| `openlivegamer4k-control_0.1.0~beta2_amd64.deb` | Compiled GTK4 control app and audio helpers |
+| `openlivegamer4k_0.1.0~beta2.tar.xz` | Corresponding complete source, including Debian packaging |
+| `openlivegamer4k_0.1.0~beta2.dsc` | Debian source description |
 | `SOURCE-REVISION.txt`, `SHA256SUMS` | Exact source commit and artifact checksums |
 
 The optional buildinfo/changes files record build metadata; debug symbols are
@@ -45,8 +46,8 @@ distribution and architecture combinations need testing.
 
 Install both matching packages with `apt` and matching kernel headers.
 **Installation alone is not capture-ready:** load with the documented bridge
-options in [installation](INSTALL.md). Audio is opt-in and disabled by default.
-Enable it in the control app while capture clients are closed, then add a V4L2
+options in [installation](INSTALL.md). Audio is enabled by default on driver load;
+an existing explicit disable option remains respected. Add a V4L2
 video source and ALSA audio source in [OBS](OBS.md). Changing audio mode reloads
 the idle driver and reconnects HDMI; the app does not change boot settings.
 
@@ -65,7 +66,8 @@ the idle driver and reconnects HDMI; the app does not change boot settings.
 - Fresh-machine package lifecycle, kernel-update, Secure Boot and Ubuntu
   qualification are incomplete. No automatic driver replacement is provided.
 
-Please report the driver/package version, kernel, distribution, input resolution
+Use **Save diagnostic report…**, review it, then **Report a problem on GitHub…**
+in the control app. See [the reporting guide](REPORTING.md). Please include the driver/package version, kernel, distribution, input resolution
 and refresh rate, output format, OBS version, and reproduction steps. The app's
 report stays local until you choose to share it. Review it before posting.
 Audio activity detection alone is not a fidelity or synchronization measurement.
