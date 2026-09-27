@@ -28,10 +28,10 @@ The video/audio capture engines are unchanged from the tested alpha4 path.
 
 | Asset | Purpose |
 | --- | --- |
-| `openlivegamer4k-dkms_0.1.0~beta2_all.deb` | Driver source; DKMS compiles for the installed kernel |
-| `openlivegamer4k-control_0.1.0~beta2_amd64.deb` | Compiled GTK4 control app and audio helpers |
-| `openlivegamer4k_0.1.0~beta2.tar.xz` | Corresponding complete source, including Debian packaging |
-| `openlivegamer4k_0.1.0~beta2.dsc` | Debian source description |
+| `openlivegamer4k-dkms_0.1.0-beta2_all.deb` | Driver source; DKMS compiles for the installed kernel |
+| `openlivegamer4k-control_0.1.0-beta2_amd64.deb` | Compiled GTK4 control app and audio helpers |
+| `openlivegamer4k-0.1.0-beta2-source.tar.xz` | Corresponding complete source, including Debian packaging |
+| `openlivegamer4k-0.1.0-beta2-debian-source.tar.gz` | Debian source bundle with canonical `.dsc` and tarball filenames |
 | `SOURCE-REVISION.txt`, `SHA256SUMS` | Exact source commit and artifact checksums |
 
 The optional buildinfo/changes files record build metadata; debug symbols are

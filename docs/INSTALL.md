@@ -46,12 +46,13 @@ In the directory containing the two packages:
 
 ```sh
 sha256sum --ignore-missing -c SHA256SUMS
-sudo apt install ./openlivegamer4k-dkms_0.1.0~beta2_all.deb ./openlivegamer4k-control_0.1.0~beta2_amd64.deb
+sudo apt install ./openlivegamer4k-dkms_0.1.0-beta2_all.deb ./openlivegamer4k-control_0.1.0-beta2_amd64.deb
 ```
 
 Install matching kernel headers first as above. Inspect the checksum results:
 both downloaded packages must say OK. Checksums detect corruption; this release
-is not signed. DKMS compiles the driver locally, so the driver package is source,
+is not signed. Download filenames use `0.1.0-beta2`; the Debian package version
+is `0.1.0~beta2` so upgrades sort correctly. DKMS compiles the driver locally, so the driver package is source,
 not a precompiled kernel module. The control app is a compiled amd64 binary.
 
 **First activation is required.** Continue at **Load the module explicitly**
@@ -182,3 +183,20 @@ or configuration as part of rollback.
 For a failed load, first inspect `dmesg` and the troubleshooting guide. If the
 module is still loaded, stop users and unload it with `sudo modprobe -r
 gc573_pure` before attempting another driver handoff.
+
+## Source downloads
+
+`openlivegamer4k-0.1.0-beta2-source.tar.xz` contains the complete corresponding
+source, including Debian packaging. Extract it and build from the resulting
+`source/` directory.
+
+For Debian source tools, extract `openlivegamer4k-0.1.0-beta2-debian-source.tar.gz`,
+enter `debian-source/`, then run:
+
+```sh
+dpkg-source -x openlivegamer4k_0.1.0~beta2.dsc
+```
+
+The bundle preserves the canonical Debian filenames internally. GitHub changes
+tilde characters in uploaded asset names, so these files are bundled rather
+than uploaded individually. Source and download checksums are included.
